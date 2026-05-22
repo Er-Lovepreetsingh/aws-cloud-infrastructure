@@ -1,0 +1,6 @@
+# change the following paramters
+
+mydomain = ops345.lovepreetsingh.site
+myorigin = $mydomain
+inet_interfaces = all
+4.	change mydestination to include $mydomain

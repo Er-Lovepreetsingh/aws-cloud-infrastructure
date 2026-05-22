@@ -26,7 +26,7 @@ A hands-on cloud infrastructure project built entirely on Amazon Web Services, c
 
 ## Architecture Overview
 
-<!-- Add architecture diagram image here -->
+![Architecture](./screenshots/aws_infra_architechture.png)
 
 The project follows a hub-and-spoke network model inside a custom AWS VPC:
 
@@ -64,9 +64,9 @@ Key steps performed:
 - Deleted the default `ec2-user` to eliminate the known default attack surface.
 - Set a fully qualified hostname (`first.lovepreet.ops345.ca`) and made it persistent by setting `preserve_hostname: true` in `/etc/cloud/cloud.cfg`.
 
-<!-- Add screenshot: successful SSH login as the new user with correct hostname prompt -->
 
----
+![Successfuly logged in](./screenshots/successful_ssh_login_with_newuser.png)
+
 
 ## Phase 2 — Custom VPC Networking & Port Forwarding
 
@@ -83,9 +83,8 @@ Key steps performed:
   - Port `443` → `10.3.45.11:443` (HTTPS to web server)
 - Saved `iptables` rules persistently with `service iptables save`.
 
-<!-- Add screenshot: successful SSH to internal VM via router port forwarding, showing the internal server's hostname -->
-
-<!-- Add screenshot: iptables -t nat -L -n -v output showing all forwarding rules -->
+![Iptables output](./screenshots/iptables.png)
+![Successfully logged in www server using Port forwarding on router](./screenshots/portforwarding_on_router.png)
 
 ---
 
@@ -102,8 +101,7 @@ Key steps performed:
 
 The website HTML/PHP source file is stored in the [`config-files/`](./config-files/) folder of this repository.
 
-<!-- Add screenshot: browser showing the live index.php page with instance metadata (private IP, date/time) -->
-
+![Testing from WAN network](./screenshots/index_page_result.png)
 ---
 
 ## Phase 4 — Managed Database (RDS MariaDB) & Nextcloud
@@ -120,9 +118,12 @@ Key steps performed:
 
 The `nextcloud.conf` Apache config file is in the [`config-files/`](./config-files/) folder of this repository.
 
-<!-- Add screenshot: Nextcloud login page or dashboard showing successful setup -->
+![Nextcloud Login page and dashboard](./screenshots/Nextcloud_login.png)
+![](./screenshots/logged_in_nextcloud.png)
 
-<!-- Add screenshot: RDS console showing the DB instance in "Available" state -->
+
+![Verfication From Database](./screenshots/Database_entries.png)
+![](./screenshots/nextcloud_logged_database.png)
 
 ---
 
@@ -144,8 +145,7 @@ DNS records created:
 
 After DNS propagation, the Nextcloud trusted domains config (`/var/www/html/nextcloud/config/config.php`) was updated to include both the subdomain and the `www` variant.
 
-<!-- Add screenshot: browser showing Nextcloud loading at https://ops345.lovepreetsingh.site -->
-
+![Logging in using Secure connection](./screenshots/nextcloudlogin_using_ssl.png)
 ---
 
 ## Phase 6 — SSL/TLS Certificate (Let's Encrypt)
@@ -161,8 +161,6 @@ Key steps performed:
 - Opened port `443` in both the router and www security groups, and added the `443` NAT forwarding rule to `iptables`.
 
 The same certificate generation process was repeated for the email server (`email.ops345.lovepreetsingh.site`) in Phase 8.
-
-<!-- Add screenshot: browser padlock/certificate info showing the valid Let's Encrypt certificate for ops345.lovepreetsingh.site -->
 
 ---
 
@@ -192,9 +190,8 @@ The same certificate generation process was repeated for the email server (`emai
 
 The Postfix `main.cf` and `master.cf` config snippets are in the [`config-files/`](./config-files/) folder of this repository.
 
-<!-- Add screenshot: Thunderbird connected to the mail server showing inbox with received emails -->
-
-<!-- Add screenshot: ss -atnp output on email server showing Postfix listening on 25/587 and Dovecot on 143/993 -->
+![Port Verification Dovecot on 993/143 and listening on 25/587](./screenshots/ss-atnp_port_ouput.png)
+![Mailclient Thunderbird Connected](./screenshots/thunderbird_connected.png)
 
 ---
 
@@ -214,9 +211,11 @@ Key steps performed:
 
 The `roundcube.conf` Apache virtual host file is in the [`config-files/`](./config-files/) folder of this repository.
 
-<!-- Add screenshot: Roundcube webmail interface in browser showing inbox with emails -->
+![Showing mails in Roundcube webmail Client](./screenshots/roundcube_1.png)
+![](./screenshots/roundcube_2.png)
 
-<!-- Add screenshot: Successfully sending an email from Roundcube and receiving it in Thunderbird -->
+![Check mail from Thunderbird, which was sent from Roundcube](./screenshots/roundcube_2.png)
+![](./screenshots/verification_roundcube.png)
 
 ---
 
@@ -237,7 +236,6 @@ All configuration files referenced in this project are stored in the [`config-fi
 | `10-auth.conf` | Dovecot auth mechanisms config |
 | `10-master.conf` | Dovecot master config (SASL socket for Postfix) |
 | `roundcube.conf` | Apache virtual host config for Roundcube (HTTPS) |
-| `roundcube-config.inc.php` | Roundcube application config |
 
 ---
 
