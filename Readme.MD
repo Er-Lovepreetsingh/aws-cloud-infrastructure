@@ -26,6 +26,7 @@ A hands-on cloud infrastructure project built entirely on Amazon Web Services, c
 
 ## Architecture Overview
 
+*Figure — AWS infrastructure architecture showing router, web server, email server, and RDS layout.*
 ![Architecture](./screenshots/aws_infra_architechture.png)
 
 The project follows a hub-and-spoke network model inside a custom AWS VPC:
@@ -64,7 +65,7 @@ Key steps performed:
 - Deleted the default `ec2-user` to eliminate the known default attack surface.
 - Set a fully qualified hostname (`first.lovepreet.ops345.ca`) and made it persistent by setting `preserve_hostname: true` in `/etc/cloud/cloud.cfg`.
 
-
+*Figure — Successful SSH login using the hardened non-default Linux user account.*
 ![Successfuly logged in](./screenshots/successful_ssh_login_with_newuser.png)
 
 
@@ -83,7 +84,10 @@ Key steps performed:
   - Port `443` → `10.3.45.11:443` (HTTPS to web server)
 - Saved `iptables` rules persistently with `service iptables save`.
 
+*Figure — iptables NAT and port-forwarding rules configured on the router instance.*
 ![Iptables output](./screenshots/iptables.png)
+
+*Figure — Successful SSH connection to the private www server through router port forwarding.*
 ![Successfully logged in www server using Port forwarding on router](./screenshots/portforwarding_on_router.png)
 
 ---
@@ -101,6 +105,7 @@ Key steps performed:
 
 The website HTML/PHP source file is stored in the [`config-files/`](./config-files/) folder of this repository.
 
+*Figure — Dynamic Apache/PHP webpage displaying server metadata and connectivity verification.*
 ![Testing from WAN network](./screenshots/index_page_result.png)
 ---
 
@@ -118,10 +123,12 @@ Key steps performed:
 
 The `nextcloud.conf` Apache config file is in the [`config-files/`](./config-files/) folder of this repository.
 
+*Figure — Secure Nextcloud login page hosted on the private web server.*
 ![Nextcloud Login page and dashboard](./screenshots/Nextcloud_login.png)
 ![](./screenshots/logged_in_nextcloud.png)
 
 
+*Figure — Verification of database tables and records stored inside the RDS MariaDB instance.*
 ![Verfication From Database](./screenshots/Database_entries.png)
 ![](./screenshots/nextcloud_logged_database.png)
 
@@ -145,6 +152,7 @@ DNS records created:
 
 After DNS propagation, the Nextcloud trusted domains config (`/var/www/html/nextcloud/config/config.php`) was updated to include both the subdomain and the `www` variant.
 
+*Figure — Nextcloud accessed securely over HTTPS using a Let's Encrypt SSL certificate.*
 ![Logging in using Secure connection](./screenshots/nextcloudlogin_using_ssl.png)
 ---
 
@@ -190,7 +198,10 @@ The same certificate generation process was repeated for the email server (`emai
 
 The Postfix `main.cf` and `master.cf` config snippets are in the [`config-files/`](./config-files/) folder of this repository.
 
+*Figure — Verification that SMTP, IMAP, and submission ports are listening correctly.*
 ![Port Verification Dovecot on 993/143 and listening on 25/587](./screenshots/ss-atnp_port_ouput.png)
+
+*Figure — Thunderbird configured successfully with IMAP and SMTP authentication.*
 ![Mailclient Thunderbird Connected](./screenshots/thunderbird_connected.png)
 
 ---
@@ -211,9 +222,11 @@ Key steps performed:
 
 The `roundcube.conf` Apache virtual host file is in the [`config-files/`](./config-files/) folder of this repository.
 
+*Figure — Roundcube webmail interface hosted securely on the email server.*
 ![Showing mails in Roundcube webmail Client](./screenshots/roundcube_1.png)
 ![](./screenshots/roundcube_2.png)
 
+*Figure — Roundcube mailbox showing successful email delivery and webmail access.*
 ![Check mail from Thunderbird, which was sent from Roundcube](./screenshots/roundcube_2.png)
 ![](./screenshots/verification_roundcube.png)
 
